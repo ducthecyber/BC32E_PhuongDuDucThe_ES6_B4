@@ -31,9 +31,9 @@ const setLocalStorage = () => {
 
 //get local storage
 const getLocalStore = () => {
-    const data = localStorage.getItem('foodList')
-    const dataParse = JSON.parse(data) || []
-
+    const data = localStorage.getItem('taskList')
+    const dataParse = JSON.parse(data)
+    taskBoard.taskList = dataParse ? dataParse : []
     taskBoard.taskList = dataParse.map(value => {
         const task = new Task()
         for (let key in value) {
@@ -53,8 +53,16 @@ getElement('addItem').onclick = () => {
 
     task.taskName = input
 
+    let valid = true
+    task.taskName = document.querySelector('#newTask').value;
+    valid = kiemTraRong(task.taskName, '#error_required_taskName', 'Task name')
+    if (valid != true) {
+        return;
+    }
     taskBoard.addTask(task);
     console.log(taskBoard.taskList)
+
+
 
     renderTaskList()
     renderTaskList1()
@@ -69,6 +77,8 @@ getElement('addItem').onclick = () => {
 window.removeTask = (taskName) => {
     taskBoard.removeTask(taskName)
     renderTaskList()
+    renderTaskList1()
+    setLocalStorage()
 }
 
 const renderTaskList1 = () => {
@@ -115,8 +125,9 @@ window.checkTask = (taskName) => {
     const task = taskBoard.checkTask(taskName)
     task.status = '1'
     console.log(taskBoard)
-
+    renderTaskList()
     renderTaskList1()
+    setLocalStorage()
 }
 
 //sắp xếp task A-Z
@@ -124,6 +135,7 @@ getElement('two').onclick = () => {
     taskBoard.filterTaskAZ()
     renderTaskList()
     renderTaskList1()
+    setLocalStorage()
 }
 
 //sắp xếp task Z-A
@@ -131,5 +143,6 @@ getElement('three').onclick = () => {
     taskBoard.filterTaskZA()
     renderTaskList()
     renderTaskList1()
+    setLocalStorage()
 }
 

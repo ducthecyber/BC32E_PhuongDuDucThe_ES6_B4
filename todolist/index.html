@@ -36,7 +36,7 @@
             <div class="card__content">
                 <div class="card__title">
                     <h2>My Tasks</h2>
-                    <p>September 9,2020</p>
+                    <p id="current_date">September 9,2020</p>
                 </div>
                 <div class="card__add">
                     <input id="newTask" type="text" placeholder="Enter an activity..." name="taskName">
@@ -44,6 +44,8 @@
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
+                <p id="error_required_taskName" class="form-validation"
+                    style="color:red;font-size: 13px;font-style:italic"></p>
                 <div class="card__todo">
                     <!-- Uncompleted tasks -->
                     <ul class="todo" id="todo"></ul>
@@ -76,8 +78,16 @@
         });
     </script>
 
+    <script>
+        date = new Date();
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+        document.getElementById("current_date").innerHTML =  day + " / " + month +" / " + year;
+    </script>
 
 
+    <script src="./js/method/method.js"></script>
     <script type="module" src="./js/controllers/main.js"></script>
 </body>
 
